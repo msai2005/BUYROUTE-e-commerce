@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CivilBook – Redirecting...</title>
+  <meta name="description" content="CivilBook Provider – Download on iOS, Android or visit our website." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #0f0f14;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(99,102,241,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(16,185,129,0.12) 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #6366f1, #10b981);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 36px;
+      box-shadow: 0 8px 32px rgba(99,102,241,0.4);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 40%, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 36px;
+      line-height: 1.5;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .status {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 32px;
+    }
+
+    /* Manual buttons */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-ios {
+      background: linear-gradient(135deg, #1c1c1e, #3a3a3c);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .btn-android {
+      background: linear-gradient(135deg, #01875f, #34a853);
+      color: #fff;
+    }
+
+    .btn-web {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+    }
+
+    .divider {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.25);
+      margin: 4px 0;
+      text-align: center;
+    }
+
+    svg { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">📐</div>
+  <h1>CivilBook Provider</h1>
+  <p class="subtitle">Detecting your device and redirecting you to the best experience…</p>
+
+  <div class="spinner" id="spinner"></div>
+  <p class="status" id="status">Detecting device…</p>
+
+  <div class="buttons" id="buttons" style="display:none;">
+    <p class="divider">Or open manually:</p>
+
+    <a id="btn-ios" class="btn btn-ios" href="https://apps.apple.com/in/app/civilbook-provider/id6754872844" target="_blank">
+      <!-- Apple icon -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      App Store (iOS)
+    </a>
+
+    <a id="btn-android" class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.civilbook.civilbookprovider&pcampaignid=web_share" target="_blank">
+      <!-- Play Store icon -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76c.3.17.64.24.99.2l12.19-11.9-2.64-2.63L3.18 23.76zM20.62 10.53l-2.77-1.6-3.05 2.98 3.05 2.98 2.8-1.62c.8-.46.8-1.28-.03-1.74zM2.3.27C2.1.48 2 .8 2 1.22v21.52c0 .44.12.76.33.96l.05.05L14.47 12v-.29L2.35.22.2.27zM15.67 8.9L3.18.28l10.56 10.33 1.93-1.71z"/></svg>
+      Google Play (Android)
+    </a>
+
+    <a id="btn-web" class="btn btn-web" href="https://civilbook.in/" target="_blank">
+      <!-- Globe icon -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Visit Website
+    </a>
+  </div>
+</div>
+
+<script>
+  const IOS_URL     = 'https://apps.apple.com/in/app/civilbook-provider/id6754872844';
+  const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.civilbook.civilbookprovider&pcampaignid=web_share';
+  const WEB_URL     = 'https://civilbook.in/';
+
+  function getDevice() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) return 'ios';
+    if (/android/i.test(ua)) return 'android';
+    return 'desktop';
+  }
+
+  function redirect() {
+    const device = getDevice();
+    const statusEl  = document.getElementById('status');
+    const spinnerEl = document.getElementById('spinner');
+    const buttonsEl = document.getElementById('buttons');
+
+    let target = WEB_URL;
+    let label  = 'Opening website…';
+
+    if (device === 'ios') {
+      target = IOS_URL;
+      label  = 'Redirecting to App Store…';
+    } else if (device === 'android') {
+      target = ANDROID_URL;
+      label  = 'Redirecting to Google Play…';
+    }
+
+    statusEl.textContent = label;
+
+    // Show manual buttons after a short delay regardless
+    setTimeout(() => {
+      spinnerEl.style.display   = 'none';
+      statusEl.textContent      = "Didn't redirect? Use the links below.";
+      buttonsEl.style.display   = 'flex';
+    }, 2500);
+
+    // Redirect after 1 second
+    setTimeout(() => { window.location.href = target; }, 1000);
+  }
+
+  redirect();
+</script>
+</body>
+</html>
