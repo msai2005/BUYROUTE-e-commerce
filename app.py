@@ -7,10 +7,17 @@ from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename  #removes extra , / ,- infilename 
 from mysql.connector import (connection)
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import razorpay
 import pdfkit
 import re
-mydb=connection.MySQLConnection(user='root',host='localhost',password='krishna',database='ecom')
+mydb = connection.MySQLConnection(
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
+)
 BASE_DIR=os.path.abspath(os.path.dirname(__file__)) # dynamic fetching of app directory
 UPLOAD_FOLDER=os.path.join(BASE_DIR,'static','uploads')#fetch static folder path
 ALLOWED_EXETENSIONS={"png","jpeg","jpg","wedp",'gif'} #it only accept mention exetensions only
@@ -18,8 +25,11 @@ MAX_CONTENT_LENGTH=6*1024*1024  #upto 6mb it will store
 os.makedirs(UPLOAD_FOLDER,exist_ok=True)
 app=Flask(__name__)
 bcrypt=Bcrypt(app)
-client=razorpay.Client(auth=("rzp_test_SvX4Kevc36OfpP","wTagj98TooEr9hYX2o23Hi0I"))
-app.secret_key='code9090'
+client = razorpay.Client(auth=(
+    os.getenv("RAZORPAY_KEY_ID"),
+    os.getenv("RAZORPAY_KEY_SECRET")
+))
+app.secret_key=os.getenv("SECRET_KEY")
 app.config['SESSION_TYPE']='filesystem'
 app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH']=MAX_CONTENT_LENGTH
