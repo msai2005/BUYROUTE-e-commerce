@@ -50,4 +50,4 @@ BUYROUTE is a full-stack e-commerce web application developed using Flask and My
 ## Author
 
 Krishna Sai
-Final Year B.Tech CSE Student
+BTECH @ 2026
